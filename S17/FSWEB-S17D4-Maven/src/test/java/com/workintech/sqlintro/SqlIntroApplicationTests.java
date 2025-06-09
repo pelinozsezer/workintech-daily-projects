@@ -62,7 +62,7 @@ class SqlIntroApplicationTests {
 		assertEquals(ogrenciRepository.findStudentsAlphabetically().size(), 10);
 		assertEquals(ogrenciRepository.findStudentsAlphabetically().get(0).getAd(), "Betül");
 		assertEquals(ogrenciRepository.findStudentsAlphabetically()
-				.get(ogrenciRepository.findStudentsAlphabetically().size()-1).getAd(), "Sema");
+				.get(ogrenciRepository.findStudentsAlphabetically().size()-1).getAd(), "İsmail");
 	}
 
 	@DisplayName("10A sınıfındaki öğrencileri okul numarasına göre azalan olarak sıralayınız.")
