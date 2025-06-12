@@ -56,6 +56,9 @@ public class DeveloperController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable int id) {
+        if (!developers.containsKey(id)) {
+            return ResponseEntity.notFound().build();
+        }
         developers.remove(id);
         return ResponseEntity.ok().build();
     }
