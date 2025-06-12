@@ -1,51 +1,33 @@
 package com.workintech.s17d2.model;
 
-import org.springframework.stereotype.Component;
-
-
 public class Developer {
     private int id;
     private String name;
-    private Double salary;
+    private double salary;
     private Experience experience;
 
-    public Developer(Integer id,  String name, Double salary, Experience experience) {
+    public Developer() {}
+
+    public Developer(int id, String name, double salary, Experience experience) {
         this.id = id;
-        this.salary = salary;
         this.name = name;
+        this.salary = salary;
         this.experience = experience;
     }
 
+    public int getId() { return id; }
 
-    public Integer getId() {
-        return id;
-    }
+    public void setId(int id) { this.id = id; }
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
+    public String getName() { return name; }
 
-    public String getName() {
-        return name;
-    }
+    public void setName(String name) { this.name = name; }
 
-    public void setName(String name) {
-        this.name = name;
-    }
+    public double getSalary() { return salary; }
 
-    public Double getSalary() {
-        return salary;
-    }
+    public void setSalary(double salary) { this.salary = salary; }
 
-    public void setSalary(Double salary) {
-        this.salary = salary;
-    }
+    public Experience getExperience() { return experience; }
 
-    public Experience getExperience() {
-        return experience;
-    }
-
-    public void setExperience(Experience experience) {
-        this.experience = experience;
-    }
+    public void setExperience(Experience experience) { this.experience = experience; }
 }
