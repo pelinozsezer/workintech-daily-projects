@@ -18,11 +18,19 @@ ON o.ogrno=i.ogrno;
 SELECT ogrno, ad, soyad FROM ogrenci WHERE ogrno NOT IN(SELECT ogrno FROM islem);
 
 --4
+--- first try -> didn't pass the test
 SELECT 
     o.sinif,
     COUNT(i.kitapno) AS kitap_sayisi
 FROM ogrenci AS o
 INNER JOIN islem AS i ON o.ogrno = i.ogrno
+WHERE o.sinif IN ('10A', '10B')
+GROUP BY o.sinif;
+
+-- use LEFT JOIN instead
+SELECT o.sinif, COUNT(i.kitapno)
+FROM ogrenci o
+LEFT JOIN islem i ON o.ogrno = i.ogrno
 WHERE o.sinif IN ('10A', '10B')
 GROUP BY o.sinif;
 
