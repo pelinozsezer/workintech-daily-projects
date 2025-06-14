@@ -15,9 +15,9 @@ public class BurgerDaoImpl implements BurgerDao{
     private EntityManager entityManager;
 
     @Override
+    @Transactional
     public void save(Burger burger) {
         entityManager.persist(burger);
-        System.out.println("Saved");
     }
 
     @Override
@@ -50,16 +50,19 @@ public class BurgerDaoImpl implements BurgerDao{
     }
 
 
+
     @Override
-    public void update(Burger burger) {
-        entityManager.merge(burger);
-        System.out.println("Updated");
+    @Transactional
+    public Burger update(Burger burger) {
+        return entityManager.merge(burger); // looks for id
     }
 
     @Override
-    public void remove(Integer id) {
+    @Transactional
+    public Boolean remove(Integer id) {
         Burger removed = entityManager.find(Burger.class,id);
-        if (removed != null) {entityManager.remove(removed);System.out.println("Removed");}
+        if (removed!=null) { entityManager.remove(removed); return true;}
+        return false;
     }
 
 

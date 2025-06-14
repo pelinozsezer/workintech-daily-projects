@@ -12,6 +12,6 @@ public interface BurgerDao {
     List<Burger> findByPrice(Double price);
     List<Burger> findByBreadType(BreadType breadType);
     List<Burger> findByContent(String content);
-    void update(Burger burger);
-    void remove(Integer id);
+    Burger update(Burger burger);
+    Boolean remove(Integer id);
 }
