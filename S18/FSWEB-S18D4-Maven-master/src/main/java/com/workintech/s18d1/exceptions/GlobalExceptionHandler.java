@@ -11,25 +11,14 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(BurgerException.class)
-    public ResponseEntity<BurgerErrorResponse> handleException(BurgerException burgerException) {
-        BurgerErrorResponse errorResponse = new BurgerErrorResponse(
-                burgerException.getHttpStatus().value(),
-                burgerException.getMessage(),
-                System.currentTimeMillis()
-        );
-
-        return new ResponseEntity<>(errorResponse, burgerException.getHttpStatus());
+    public ResponseEntity<BurgerErrorResponse> exceptionHandler(BurgerException burgerException) {
+        BurgerErrorResponse burgerErrorResponse = new BurgerErrorResponse(burgerException.getMessage());
+        return new ResponseEntity<>(burgerErrorResponse, burgerException.getHttpStatus());
     }
 
-
-    @ExceptionHandler
-    public ResponseEntity<BurgerErrorResponse> handleException(Exception exception) {
-        BurgerErrorResponse errorResponse = new BurgerErrorResponse(
-                HttpStatus.BAD_REQUEST.value(),
-                exception.getMessage(),
-                System.currentTimeMillis()
-        );
-
-        return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<BurgerErrorResponse> exceptionHandler(Exception exception) {
+        BurgerErrorResponse errorResponse = new BurgerErrorResponse(exception.getMessage());
+        return new ResponseEntity<>(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }

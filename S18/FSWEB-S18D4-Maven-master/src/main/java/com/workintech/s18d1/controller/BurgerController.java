@@ -1,68 +1,84 @@
 package com.workintech.s18d1.controller;
 
-import com.workintech.s18d1.dao.BurgerDaoImpl;
+import com.workintech.s18d1.dao.BurgerDao;
 import com.workintech.s18d1.entity.BreadType;
 import com.workintech.s18d1.entity.Burger;
+import com.workintech.s18d1.exceptions.BurgerException;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-
 @RestController
-@RequestMapping("/burgers")
-public class BurgerController{
+@RequestMapping("/burger")
+public class BurgerController {
 
-    private BurgerDaoImpl burgerDaoImpl;
+    private BurgerDao burgerDao;
 
     @Autowired
-    public  BurgerController(BurgerDaoImpl burgerDaoImpl) {
-        this.burgerDaoImpl=burgerDaoImpl;
+    public BurgerController(BurgerDao burgerDao) {
+        this.burgerDao = burgerDao;
     }
 
     @GetMapping
-    public List<Burger> getBurgers() {
-        return burgerDaoImpl.findAll(); // List
+    @ResponseStatus(HttpStatus.OK)
+    public List<Burger> getAllBurgers() {
+        return burgerDao.findAll();
     }
 
     @GetMapping("/{id}")
-    public Burger getById(@PathVariable("id") Long id) {
-        Burger removed = burgerDaoImpl.findById(id); // return Burger
-        return removed; // maybe null!!
+    @ResponseStatus(HttpStatus.OK)
+    public Burger getBurger(@PathVariable Long id) {
+        if (id <= 0) {
+            throw new BurgerException("ID değer 0 ve negatif olamaz. ID: " + id, HttpStatus.BAD_REQUEST);
+        }
+        return burgerDao.findById(id);
     }
 
+
+    @GetMapping("/price")
+    @ResponseStatus(HttpStatus.OK)
+    public List<Burger> getBurgerByPrice( Double price) {
+        if (price <= 0) {
+            throw new BurgerException("Price değeri 0 ve negatif olamaz. Price: " + price, HttpStatus.BAD_REQUEST);
+        }
+        return burgerDao.findByPrice(price);
+    }
+
+    @GetMapping("/breadType")
+    @ResponseStatus(HttpStatus.OK)
+    public List<Burger> getBurgerByBreadType( BreadType breadType) {
+        return burgerDao.findByBreadType(breadType);
+    }
+
+    @GetMapping("/content")
+    @ResponseStatus(HttpStatus.OK)
+    public List<Burger> getBurgerContent(String content) {
+        return burgerDao.findByContent(content);
+    }
+
+
     @PostMapping
-    public void createBurger(Burger burger) {
-        burgerDaoImpl.save(burger); // returns void
+    @ResponseStatus(HttpStatus.OK)
+    public Burger postBurger(@RequestBody Burger burger) {
+        return burgerDao.save(burger);
     }
 
     @PutMapping
+    @ResponseStatus(HttpStatus.OK)
     public Burger updateBurger(@RequestBody Burger burger) {
-        return burgerDaoImpl.update(burger); // Burger
+        return burgerDao.update(burger);
     }
 
     @DeleteMapping("/{id}")
-    public Burger deleteBurger(@PathVariable("id") Long id) {
-        return burgerDaoImpl.remove(id);
+    @ResponseStatus(HttpStatus.OK)
+    public Burger deleteBurger(@PathVariable Long id) {
+
+        return   burgerDao.remove(id);
+
     }
-
-    @GetMapping("/findByPrice")
-    public List<Burger> getFindByPrice(Double price) {
-        return burgerDaoImpl.findByPrice(price); // List
-    }
-
-    @GetMapping("/findByBreadType")
-    public List<Burger> getFindByBreadType (BreadType breadType) {
-        return burgerDaoImpl.findByBreadType(breadType); // List
-    }
-
-    @GetMapping("/findByContent")
-    public List<Burger> getFindByContent(String content) {
-        return burgerDaoImpl.findByContent(content); // List
-    }
-
-
-
 
 
 }
