@@ -18,7 +18,7 @@ import org.hibernate.type.SqlTypes;
 public class Burger {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
     private String name;
     private Double price;
     private Boolean isVegan;
@@ -26,10 +26,12 @@ public class Burger {
     @Enumerated(EnumType.STRING)
     private BreadType breadType;
 
+    private String contents;
 
+    /*
     @JdbcTypeCode(SqlTypes.ARRAY)
     @Column(name = "contents",
             columnDefinition = "text[]")
     private String[] contents; // contents TEXT[]
-
+*/
 }

@@ -1,5 +1,8 @@
 package com.workintech.zoo.entity;
 
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -8,10 +11,17 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 public class Koala {
+    @Min(1)
+
     private Integer id;
+
+    @NotBlank
     private String name;
+
     private Double sleepHour;
+
     private Double weight;
-    private String gender;
+
+    private String gender; // "male" or "female"
 
 }

@@ -2,14 +2,14 @@ package com.workintech.zoo.exceptions;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
 public class ZooErrorResponse {
-    private Integer status;
+    private int status;
     private String message;
-    private Long timestamp;
-
+    private long timestamp;
 }

@@ -5,30 +5,37 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
-@Slf4j
 @ControllerAdvice
+@Slf4j
 public class ZooGlobalExceptionHandler {
-    @ExceptionHandler
-    public ResponseEntity<ZooErrorResponse> handleException(ZooException exception) {
+
+    @ExceptionHandler(ZooException.class)
+    public ResponseEntity<ZooErrorResponse> handleException(ZooException zooException){
+        log.error("ZooException: {}", zooException.getMessage(), zooException);
+
         ZooErrorResponse zooErrorResponse = new ZooErrorResponse(
-                exception.getHttpStatus().value(),
-                exception.getLocalizedMessage(),
+
+                zooException.getHttpStatus().value(),
+                zooException.getMessage(),
                 System.currentTimeMillis()
         );
-        log.error("Exception occurred: ", exception);
-        return new ResponseEntity<>(zooErrorResponse, exception.getHttpStatus());
+        return new ResponseEntity<>(zooErrorResponse, zooException.getHttpStatus());
+
     }
 
     @ExceptionHandler
     public ResponseEntity<ZooErrorResponse> handleException(Exception exception) {
+
+        log.error("Unhandled exception: {}", exception.getMessage(), exception);
+
         ZooErrorResponse zooErrorResponse = new ZooErrorResponse(
-                HttpStatus.INTERNAL_SERVER_ERROR.value(),
-                exception.getLocalizedMessage(),
+                HttpStatus.BAD_REQUEST.value(),
+                exception.getMessage(),
+
                 System.currentTimeMillis()
         );
-        log.error("Exception occurred: ", exception);
-        return new ResponseEntity<>(zooErrorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
+        return new ResponseEntity<>(zooErrorResponse, HttpStatus.BAD_REQUEST);
     }
-
 }

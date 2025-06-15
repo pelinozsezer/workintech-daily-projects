@@ -26,7 +26,7 @@ public class BurgerController{
     }
 
     @GetMapping("/{id}")
-    public Burger getById(@PathVariable("id") Integer id) {
+    public Burger getById(@PathVariable("id") Long id) {
         Burger removed = burgerDaoImpl.findById(id); // return Burger
         return removed; // maybe null!!
     }
@@ -42,7 +42,7 @@ public class BurgerController{
     }
 
     @DeleteMapping("/{id}")
-    public Boolean deleteBurger(@PathVariable("id") Integer id) {
+    public Boolean deleteBurger(@PathVariable("id") Long id) {
         return burgerDaoImpl.remove(id);
     }
 

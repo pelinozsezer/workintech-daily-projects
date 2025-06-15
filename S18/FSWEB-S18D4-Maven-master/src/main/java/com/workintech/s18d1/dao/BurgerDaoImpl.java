@@ -5,7 +5,9 @@ import com.workintech.s18d1.entity.Burger;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
 import jakarta.transaction.Transactional;
+import jakarta.validation.constraints.NotBlank;
 import org.springframework.stereotype.Repository;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 
@@ -16,12 +18,13 @@ public class BurgerDaoImpl implements BurgerDao{
 
     @Override
     @Transactional
-    public void save(Burger burger) {
+    public Burger save(@RequestBody Burger burger) {
         entityManager.persist(burger);
+        return burger;
     }
 
     @Override
-    public Burger findById(Integer id) {
+    public Burger findById(Long id) { //0dan küçük olmamalı
         return entityManager.find(Burger.class, id);
     }
 
@@ -32,7 +35,7 @@ public class BurgerDaoImpl implements BurgerDao{
     }
 
     @Override
-    public List<Burger> findByPrice(Double price) {
+    public List<Burger> findByPrice(Double price) { // 0dan küçük olmamalı
         TypedQuery<Burger> query = entityManager.createQuery("SELECT b FROM Burger b" +
                 "WHERE b.price= :price ORDER BY b.price",Burger.class);
         query.setParameter("price",price);
@@ -53,13 +56,13 @@ public class BurgerDaoImpl implements BurgerDao{
 
     @Override
     @Transactional
-    public Burger update(Burger burger) {
+    public Burger update(@RequestBody Burger burger) {
         return entityManager.merge(burger); // looks for id
     }
 
     @Override
     @Transactional
-    public Boolean remove(Integer id) {
+    public Boolean remove(Long id) { // 0dan küçük olabilir
         Burger removed = entityManager.find(Burger.class,id);
         if (removed!=null) { entityManager.remove(removed); return true;}
         return false;
@@ -68,7 +71,7 @@ public class BurgerDaoImpl implements BurgerDao{
 
 
 
-
+/*
     @Override
     public List<Burger> findByContent(String content) {
 
@@ -85,6 +88,18 @@ public class BurgerDaoImpl implements BurgerDao{
         TypedQuery<Burger> query = entityManager.createQuery(sql,Burger.class);
         query.setParameter("pattern", "%" + content + "%");
         return query.getResultList();
+    }
+
+ */
+    @Override
+    public List<Burger> findByContent(String content) { // boş olabilir
+        TypedQuery<Burger> query = entityManager.createQuery(
+                "SELECT b FROM Burger b WHERE b.contents ILIKE :content ORDER BY b.name",
+                Burger.class
+        );
+        query.setParameter("content", "%" + content + "%");
+        return query.getResultList();
+
     }
 
 
