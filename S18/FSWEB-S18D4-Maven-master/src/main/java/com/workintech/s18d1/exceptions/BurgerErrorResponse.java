@@ -5,10 +5,13 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @AllArgsConstructor
-@NoArgsConstructor
 @Data
 public class BurgerErrorResponse {
     private Integer status;
     private String message;
     private Long timestamp;
+
+    public BurgerErrorResponse(String message) {
+        this.message=message;
+    }
 }

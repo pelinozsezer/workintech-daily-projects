@@ -1,12 +1,11 @@
 package com.workintech.s18d1.exceptions;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+
+import lombok.Getter;
 import org.springframework.http.HttpStatus;
 
 
-@Data
+@Getter
 public class BurgerException extends RuntimeException{
 
     private HttpStatus httpStatus;

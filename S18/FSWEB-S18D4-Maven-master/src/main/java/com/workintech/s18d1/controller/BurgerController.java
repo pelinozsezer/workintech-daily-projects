@@ -42,7 +42,7 @@ public class BurgerController{
     }
 
     @DeleteMapping("/{id}")
-    public Boolean deleteBurger(@PathVariable("id") Long id) {
+    public Burger deleteBurger(@PathVariable("id") Long id) {
         return burgerDaoImpl.remove(id);
     }
 

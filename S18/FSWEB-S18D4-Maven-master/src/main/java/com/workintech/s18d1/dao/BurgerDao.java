@@ -13,5 +13,5 @@ public interface BurgerDao {
     List<Burger> findByBreadType(BreadType breadType);
     List<Burger> findByContent(String content);
     Burger update(Burger burger);
-    Boolean remove(Long id);
+    Burger remove(Long id);
 }
