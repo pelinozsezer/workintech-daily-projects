@@ -119,7 +119,7 @@ class ApplicationPropertiesAndControllerTests {
 
     @Test
     void testGetByIdSuccess() throws Exception {
-        given(fruitService.getById(1L)).willReturn(sampleFruit);
+        given(fruitService.findById(1L)).willReturn(sampleFruit);
         mockMvc.perform(get("/fruit/{id}", 1L))
                 .andExpect(status().isOk());
     }
