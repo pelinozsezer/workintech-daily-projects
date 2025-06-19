@@ -1,4 +1,4 @@
-package com.workintech.s18d4;
+package com.workintech.s19d1;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
@@ -17,9 +17,9 @@ import java.util.Optional;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-public class ResultAnalyzer2 implements TestWatcher, AfterAllCallback{
+public class ResultAnalyzer implements TestWatcher, AfterAllCallback{
     private List<TestResultStatus> testResultsStatus = new ArrayList<>();
-    private static final String taskId = "171";
+    private static final String taskId = "174";
 
     private enum TestResultStatus {
         SUCCESSFUL, ABORTED, FAILED, DISABLED;
